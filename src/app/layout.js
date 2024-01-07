@@ -6,6 +6,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata = {
     title: "Register",
     description: "Registrasi mahasiswa Universitas Jenderal Soedirman",
+    image: "/logo.png",
 };
 
 export default function RootLayout({ children }) {
