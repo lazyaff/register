@@ -62,7 +62,7 @@ export default function Mahasiswa() {
                 if (responseData.success) {
                     Swal.fire({
                         title: "Sukses",
-                        text: "Data berhasil di hapus",
+                        text: responseData.message,
                         icon: "success",
                         showConfirmButton: true,
                     });
@@ -82,7 +82,7 @@ export default function Mahasiswa() {
                 } else {
                     Swal.fire({
                         title: "Gagal",
-                        text: "Terjadi kesalahan",
+                        text: responseData.message,
                         icon: "error",
                         showConfirmButton: true,
                     });
@@ -131,7 +131,7 @@ export default function Mahasiswa() {
         if (responseData.success) {
             Swal.fire({
                 title: "Sukses",
-                text: "Data berhasil di perbarui",
+                text: responseData.message,
                 icon: "success",
                 showConfirmButton: true,
             });
@@ -148,15 +148,15 @@ export default function Mahasiswa() {
             };
 
             fetchData();
+            closeModal();
         } else {
             Swal.fire({
                 title: "Gagal",
-                text: "Terjadi kesalahan",
+                text: responseData.message,
                 icon: "error",
                 showConfirmButton: true,
             });
         }
-        closeModal();
     };
 
     return (
@@ -293,7 +293,7 @@ export default function Mahasiswa() {
                             </button>
                         </Link>
                         {data.data.length == 0 ? (
-                            <p className="text-center">Tidak ada data</p>
+                            <p className="text-center py-6">Tidak ada data</p>
                         ) : (
                             data.data.map((item) => (
                                 <li className="py-3 sm:py-4" key={item.id}>
