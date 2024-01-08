@@ -4,6 +4,16 @@ import { writeFile } from "fs/promises";
 export async function GET() {
     const data = await prisma.mahasiswa.findMany();
     if (data) {
+        data.forEach((data) => {
+            const dateObject = new Date(data.date_birth);
+            const day = dateObject.getDate().toString().padStart(2, "0");
+            const month = (dateObject.getMonth() + 1)
+                .toString()
+                .padStart(2, "0");
+            const year = dateObject.getFullYear();
+            const formattedDate = `${year}-${month}-${day}`;
+            data.date_birth = formattedDate;
+        });
         return Response.json({
             success: true,
             code: 200,
@@ -83,9 +93,9 @@ export async function POST(req) {
 
         const dateOfBirthString = date_birth;
         const parts = dateOfBirthString.split("-");
-        const formattedDateOfBirth = `${parts[1]}-${parts[0]}-${parts[2]}`;
+        const formattedDateOfBirth = `${parts[1]}-${parts[2]}-${parts[0]}`;
         date_birth = new Date(formattedDateOfBirth);
-        date_birth.setDate(date_birth.getDate() + 1);
+        date_birth.setDate(date_birth.getDate());
 
         const extension = picture.name.substring(
             picture.name.lastIndexOf(".") + 1
@@ -125,7 +135,7 @@ export async function POST(req) {
             {
                 success: false,
                 code: 500,
-                message: "Terjadi kesalahan",
+                message: error.toString(),
             },
             { status: 500 }
         );
